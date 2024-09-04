@@ -1,9 +1,17 @@
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
 
 export default function AuthLayout() {
   return (
-    <div>
+    <AuthContainer>
       <Outlet />
-    </div>
+    </AuthContainer>
   );
 }
+
+const AuthContainer = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
