@@ -14,7 +14,7 @@ const StyledHeader = styled.header`
   display: flex;
   height: 64px;
   background-color: #2196f3;
-  padding: 0 64px;
+  padding: 0 62px;
   position: "sticky";
   width: 100%;
 `;
