@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  MethodNotAllowedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { LikeEntity } from './entities/like.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,6 +17,9 @@ export class LikesService {
   ) {}
 
   async likeCat(userId: string, cat_id: string) {
+    if (!cat_id) {
+      throw new MethodNotAllowedException('Cat id is required');
+    }
     const user = await this.usersService.findOneOrFail(userId);
     const like = this.likesRepository.create({
       cat_id,
@@ -27,7 +34,7 @@ export class LikesService {
       where: { user: { id: userId }, cat_id },
     });
     if (!like) {
-      return;
+      throw new NotFoundException('Like not found');
     }
     return this.likesRepository.remove(like);
   }

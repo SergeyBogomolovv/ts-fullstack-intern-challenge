@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, MethodNotAllowedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
@@ -30,7 +30,7 @@ export class UsersService {
           user: existingUser,
         };
       } else {
-        throw new BadRequestException('Invalid credentials');
+        throw new MethodNotAllowedException('Invalid credentials');
       }
     }
 
