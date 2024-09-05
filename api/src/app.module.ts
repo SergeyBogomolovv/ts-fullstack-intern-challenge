@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { UserEntity } from './users/entities/user.entity';
 import { LikeEntity } from './likes/entities/like.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -19,6 +20,8 @@ import { LikeEntity } from './likes/entities/like.entity';
         POSTGRES_DB: Joi.string().required(),
         POSTGRES_PORT: Joi.number().integer().required(),
         POSTGRES_HOST: Joi.string().required(),
+
+        JWT_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -30,6 +33,11 @@ import { LikeEntity } from './likes/entities/like.entity';
       database: process.env.POSTGRES_DB,
       synchronize: true,
       entities: [UserEntity, LikeEntity],
+    }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '24h' },
+      global: true,
     }),
   ],
 })
