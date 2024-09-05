@@ -1,8 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SingInFields } from "../model/schemas";
-import { ACCESS_TOKEN_KEY, API_URL } from "@/shared/constants";
+import { ACCESS_TOKEN_KEY } from "@/shared/constants";
 import { useRevalidator } from "react-router-dom";
+import { useState } from "react";
+import $api from "@/shared/config/axios";
 
 export const useSignInForm = () => {
   const {
@@ -14,24 +16,26 @@ export const useSignInForm = () => {
     defaultValues: { login: "", password: "" },
   });
 
-  const revalidator = useRevalidator();
+  const { revalidate } = useRevalidator();
+
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<SingInFields> = async (data) => {
-    const response = await fetch(`${API_URL}/user`, {
-      body: JSON.stringify(data),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok && response.headers.has("X-Auth-Token")) {
-      localStorage.setItem(
-        ACCESS_TOKEN_KEY,
-        response.headers.get("X-Auth-Token")!,
-      );
-      revalidator.revalidate();
+    try {
+      const { headers } = await $api.post("/user", data);
+      if (headers["x-auth-token"]) {
+        localStorage.setItem(ACCESS_TOKEN_KEY, headers["x-auth-token"]);
+        revalidate();
+      }
+    } catch (error) {
+      setServerError("Неверный логин или пароль");
     }
   };
 
-  return { handleSubmit: handleSubmit(onSubmit), register, errors };
+  return {
+    handleSubmit: handleSubmit(onSubmit),
+    register,
+    errors,
+    serverError,
+  };
 };

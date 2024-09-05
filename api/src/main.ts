@@ -6,7 +6,13 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  app.use(cors({ origin: '*' }));
+  app.use(
+    cors({
+      origin: 'http://localhost:5173',
+      credentials: true,
+      exposedHeaders: ['X-Auth-Token'],
+    }),
+  );
   await app.listen(3000);
 }
 

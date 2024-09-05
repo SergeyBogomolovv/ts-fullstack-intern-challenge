@@ -12,14 +12,14 @@ const InputWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledInput = styled.input<{ error?: boolean }>`
+const StyledInput = styled.input<{ $error?: boolean }>`
   padding: 0.75rem;
   font-size: 1rem;
-  border: 2px solid ${(props) => (props.error ? "red" : "#2196f3")};
+  border: 2px solid ${(props) => (props.$error ? "red" : "#2196f3")};
   border-radius: 0.75rem;
   &:focus {
     outline: none;
-    border-color: ${(props) => (props.error ? "red" : "#1e88e5")};
+    border-color: ${(props) => (props.$error ? "red" : "#1e88e5")};
   }
 `;
 
@@ -30,8 +30,8 @@ const ErrorText = styled.span`
   margin-left: 0.25rem;
 `;
 
-const StyledLabel = styled.label<{ error?: boolean }>`
-  color: ${(props) => (props.error ? "red" : "black")};
+const StyledLabel = styled.label<{ $error?: boolean }>`
+  color: ${(props) => (props.$error ? "red" : "black")};
   font-size: 1rem;
   margin-bottom: 0.25rem;
 `;
@@ -58,8 +58,8 @@ const Input = <T extends FieldValues>({
 
   return (
     <InputWrapper>
-      {label && <StyledLabel error={!!error}>{label}</StyledLabel>}
-      <StyledInput {...register(name)} {...props} error={!!error} />
+      {label && <StyledLabel $error={!!error}>{label}</StyledLabel>}
+      <StyledInput {...register(name)} {...props} $error={!!error} />
       {error && <ErrorText>{error}</ErrorText>}
     </InputWrapper>
   );

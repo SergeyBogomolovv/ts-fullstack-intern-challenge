@@ -2,9 +2,10 @@ import Form from "@/shared/ui/form";
 import Input from "@/shared/ui/input";
 import Button from "@/shared/ui/button";
 import { useSignInForm } from "../model/use-signin-form";
+import ErrorCard from "@/shared/ui/error-card";
 
 export default function SignInForm() {
-  const { errors, register, handleSubmit } = useSignInForm();
+  const { errors, register, handleSubmit, serverError } = useSignInForm();
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -24,6 +25,7 @@ export default function SignInForm() {
         placeholder="Пароль"
       />
       <Button>Войти</Button>
+      {serverError && <ErrorCard>{serverError}</ErrorCard>}
     </Form>
   );
 }
