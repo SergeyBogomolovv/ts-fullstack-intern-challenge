@@ -13,10 +13,8 @@ export default function CatFeed({ cats }: Props) {
       {cats.map((cat) => (
         <CatCard
           key={cat.id}
-          url={cat.url}
-          alt={`cat ${cat.id}`}
-          id={cat.id}
-          button={(id) => <FavoriteButton id={id} />}
+          cat={cat}
+          button={(cat) => <FavoriteButton cat={cat} />}
         />
       ))}
     </CatsContainer>

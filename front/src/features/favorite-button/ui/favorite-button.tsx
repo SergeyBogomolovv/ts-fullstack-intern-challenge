@@ -1,10 +1,12 @@
+import { Cat } from "@/shared/types";
 import Heart from "@/shared/ui/heart";
 import styled from "styled-components";
+
 interface Props {
-  id: string;
+  cat: Cat;
 }
 
-export default function FavoriteButton({ id }: Props) {
+export default function FavoriteButton({ cat }: Props) {
   return (
     <StyledButton>
       <Heart />

@@ -4,7 +4,6 @@ import { signInSchema, SingInFields } from "../model/schemas";
 import Form from "@/shared/ui/form";
 import Input from "@/shared/ui/input";
 import Button from "@/shared/ui/button";
-import StyledLink from "./styled-link";
 
 export default function SignInForm() {
   const {
@@ -27,7 +26,7 @@ export default function SignInForm() {
         label="Логин"
         name="login"
         register={register}
-        placeholder="Nickname"
+        placeholder="Ваш логин"
       />
       <Input
         errors={errors}
@@ -38,9 +37,6 @@ export default function SignInForm() {
         placeholder="Пароль"
       />
       <Button>Войти</Button>
-      <StyledLink to="/sign-up">
-        Еще нету аккаунта? Зарегистрируйтесь
-      </StyledLink>
     </Form>
   );
 }

@@ -13,10 +13,14 @@ const Link = styled(NavLink)`
   align-items: center;
   justify-content: center;
   opacity: 0.7;
-  cursor: pointer;
   &.active {
     background-color: #1e88e5;
     opacity: 1;
+  }
+  &:hover {
+    background-color: #1e88e5;
+    opacity: 1;
+    cursor: pointer;
   }
 `;
 

@@ -17,7 +17,5 @@ const StyledHeader = styled.header`
   padding: 0 62px;
   position: "sticky";
   width: 100%;
-  -webkit-box-shadow: -1px 4px 7px 2px rgba(34, 60, 80, 0.2);
-  -moz-box-shadow: -1px 4px 7px 2px rgba(34, 60, 80, 0.2);
-  box-shadow: -1px 4px 7px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
 `;
