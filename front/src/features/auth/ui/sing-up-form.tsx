@@ -42,7 +42,7 @@ export default function SignUpForm() {
         errors={errors}
         label="Повторите пароль"
         register={register}
-        name="password"
+        name="passwordConfirm"
         type="password"
         placeholder="Повторите пароль"
       />

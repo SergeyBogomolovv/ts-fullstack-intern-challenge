@@ -15,17 +15,11 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input<{ error?: boolean }>`
   padding: 0.75rem;
   font-size: 1rem;
-
-  background-color: #2196f3;
-  color: #fff;
   border: 2px solid ${(props) => (props.error ? "red" : "#2196f3")};
   border-radius: 0.75rem;
   &:focus {
     outline: none;
     border-color: ${(props) => (props.error ? "red" : "#1e88e5")};
-  }
-  &::placeholder {
-    color: #e7e7e7;
   }
 `;
 
