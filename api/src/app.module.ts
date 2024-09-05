@@ -7,6 +7,7 @@ import * as Joi from 'joi';
 import { UserEntity } from './users/entities/user.entity';
 import { LikeEntity } from './likes/entities/like.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtAuthGuard } from './common/guards/auth.guard';
 
 @Module({
   imports: [
@@ -40,5 +41,6 @@ import { JwtModule } from '@nestjs/jwt';
       global: true,
     }),
   ],
+  providers: [JwtAuthGuard],
 })
 export class AppModule {}
