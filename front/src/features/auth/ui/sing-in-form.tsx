@@ -1,26 +1,13 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema, SingInFields } from "../model/schemas";
 import Form from "@/shared/ui/form";
 import Input from "@/shared/ui/input";
 import Button from "@/shared/ui/button";
+import { useSignInForm } from "../model/use-signin-form";
 
 export default function SignInForm() {
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-  } = useForm<SingInFields>({
-    resolver: zodResolver(signInSchema),
-    defaultValues: { login: "", password: "" },
-  });
-
-  const onSubmit: SubmitHandler<SingInFields> = async (data) => {
-    console.log(data);
-  };
+  const { errors, register, handleSubmit } = useSignInForm();
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit}>
       <Input
         errors={errors}
         label="Логин"
