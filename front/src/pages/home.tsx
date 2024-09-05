@@ -1,9 +1,7 @@
-import CatCard from "@/entities/cat-card";
-import FavoriteButton from "@/features/favorite-button/ui/favorite-button";
 import LoadMoreButton from "@/features/load-more-button";
 import { Cat } from "@/shared/types";
-import CatsContainer from "@/shared/ui/cats-container";
 import getCats from "@/shared/utils/get-cats";
+import CatFeed from "@/widgets/cat-feed";
 import { useEffect, useState } from "react";
 
 export default function HomePage() {
@@ -15,17 +13,7 @@ export default function HomePage() {
 
   return (
     <>
-      <CatsContainer>
-        {cats.map((cat) => (
-          <CatCard
-            key={cat.id}
-            url={cat.url}
-            alt={`cat ${cat.id}`}
-            id={cat.id}
-            button={(id) => <FavoriteButton id={id} />}
-          />
-        ))}
-      </CatsContainer>
+      <CatFeed cats={cats} />
       <LoadMoreButton />
     </>
   );
