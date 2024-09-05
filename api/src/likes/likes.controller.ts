@@ -16,12 +16,12 @@ export class LikesController {
   constructor(private readonly likesService: LikesService) {}
 
   @Get()
-  likesList(@UserId() userId: string): string {
+  likesList(@UserId() userId: string) {
     return this.likesService.getList(userId);
   }
 
   @Post()
-  likeCat(@UserId() userId: string, @Body('cat_id') cat_id: string): string {
+  likeCat(@UserId() userId: string, @Body('cat_id') cat_id: string) {
     return this.likesService.likeCat(userId, cat_id);
   }
 

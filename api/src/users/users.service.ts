@@ -43,6 +43,22 @@ export class UsersService {
     return { token: this.generateToken(user.id), user };
   }
 
+  update(id: string, dto: Partial<UserEntity>) {
+    return this.usersRepository.update(id, dto);
+  }
+
+  findOneOrFail(id: string) {
+    return this.usersRepository.findOneByOrFail({ id });
+  }
+
+  async getUsersLikes(id: string) {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['likes'],
+    });
+    return user.likes;
+  }
+
   private hashPassword(password: string): Promise<string> {
     return hash(password, genSaltSync());
   }
