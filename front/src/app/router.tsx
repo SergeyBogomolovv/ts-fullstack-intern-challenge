@@ -7,8 +7,7 @@ import RootLayout from "./root-layout";
 import HomePage from "../pages/home";
 import FavoritesPage from "../pages/favorites";
 import SignInPage from "@/pages/sign-in";
-import { authLoader } from "@/features/auth";
-import { protectedLoader } from "./protected-loader";
+import { authLoader, protectedLoader } from "@/features/auth";
 import NotFoundPage from "@/pages/404";
 
 const router = createBrowserRouter(
