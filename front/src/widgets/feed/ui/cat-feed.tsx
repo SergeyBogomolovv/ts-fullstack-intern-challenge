@@ -1,5 +1,5 @@
 import CatCard from "@/entities/cat-card";
-import FavoriteButton from "@/features/favorite-button";
+import FavoriteButton from "@/features/like-button";
 import { Cat } from "@/shared/types";
 import CatsContainer from "@/shared/ui/cats-container";
 

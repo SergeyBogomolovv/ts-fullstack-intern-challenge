@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_KEY, API_URL } from "../constants";
 const $api = axios.create({
   baseURL: API_URL,
   headers: {
-    "X-Auth-Token": localStorage.getItem(ACCESS_TOKEN_KEY),
+    "x-auth-token": localStorage.getItem(ACCESS_TOKEN_KEY),
   },
 });
 

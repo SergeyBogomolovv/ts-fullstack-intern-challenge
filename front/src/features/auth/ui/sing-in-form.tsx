@@ -13,6 +13,7 @@ export default function SignInForm() {
         errors={errors}
         label="Логин"
         name="login"
+        autoComplete="username"
         register={register}
         placeholder="Ваш логин"
       />
@@ -22,6 +23,7 @@ export default function SignInForm() {
         register={register}
         name="password"
         type="password"
+        autoComplete="current-password"
         placeholder="Пароль"
       />
       <Button>Войти</Button>
