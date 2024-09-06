@@ -1,10 +1,10 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SingInFields } from "../model/schemas";
 import { ACCESS_TOKEN_KEY } from "@/shared/constants";
 import { useRevalidator } from "react-router-dom";
-import { useState } from "react";
 import $api from "@/shared/config/axios";
+import { useMutation } from "@tanstack/react-query";
 
 export const useSignInForm = () => {
   const {
@@ -18,24 +18,23 @@ export const useSignInForm = () => {
 
   const { revalidate } = useRevalidator();
 
-  const [serverError, setServerError] = useState<string | null>(null);
-
-  const onSubmit: SubmitHandler<SingInFields> = async (data) => {
-    try {
+  const { mutate, error } = useMutation({
+    mutationFn: async (data: SingInFields) => {
       const { headers } = await $api.post("/user", data);
-      if (headers["x-auth-token"]) {
-        localStorage.setItem(ACCESS_TOKEN_KEY, headers["x-auth-token"]);
+      return headers["x-auth-token"];
+    },
+    onSuccess(token: string | undefined) {
+      if (token) {
+        localStorage.setItem(ACCESS_TOKEN_KEY, token);
         revalidate();
       }
-    } catch (error) {
-      setServerError("Неверный логин или пароль");
-    }
-  };
+    },
+  });
 
   return {
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit: handleSubmit((data) => mutate(data)),
     register,
     errors,
-    serverError,
+    error: error ? "Неверный логин или пароль" : null,
   };
 };

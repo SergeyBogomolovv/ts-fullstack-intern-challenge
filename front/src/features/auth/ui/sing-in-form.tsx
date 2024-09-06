@@ -5,7 +5,7 @@ import { useSignInForm } from "../model/use-signin-form";
 import ErrorCard from "@/shared/ui/error-card";
 
 export default function SignInForm() {
-  const { errors, register, handleSubmit, serverError } = useSignInForm();
+  const { errors, register, handleSubmit, error } = useSignInForm();
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -25,7 +25,7 @@ export default function SignInForm() {
         placeholder="Пароль"
       />
       <Button>Войти</Button>
-      {serverError && <ErrorCard>{serverError}</ErrorCard>}
+      {error && <ErrorCard>{error}</ErrorCard>}
     </Form>
   );
 }
