@@ -1,7 +1,8 @@
 import CatCard from "@/entities/cat-card";
 import FavoriteButton from "@/features/like-button";
-import { Cat } from "@/shared/types";
+import { Cat } from "@/shared/schemas";
 import CatsContainer from "@/shared/ui/cats-container";
+import CatsSkeleton from "@/shared/ui/cats-skeleton";
 import Container from "@/shared/ui/container";
 import styled from "styled-components";
 
@@ -19,10 +20,10 @@ export default function FeedContainer({
   return (
     <Container>
       {initialLoading ? (
-        //TODO update skeleton
-        <div>loading skeleton...</div>
+        <CatsSkeleton />
       ) : (
         <>
+          {data.length === 0 && <LoadingLabel>Котиков нет :(</LoadingLabel>}
           <CatsContainer>
             {data.map((cat) => (
               <CatCard

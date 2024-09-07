@@ -1,7 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { $cats } from "@/shared/config/axios";
-import { Cat, CatImage } from "@/shared/types";
 import { useEffect } from "react";
+import { Cat, CatImage, CatImageSchema } from "@/shared/schemas";
+import { z } from "zod";
 
 export const useFeed = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
@@ -11,11 +12,16 @@ export const useFeed = () => {
         const { data } = await $cats.get<CatImage[]>(
           `/images/search?size=med&mime_types=jpg&format=json&order=RANDOM&page=${pageParam}&limit=15`,
         );
-        return data.map((cat) => ({
-          cat_id: cat.id,
-          image_url: cat.url,
-          favorite: false, //TODO: set it right
-        }));
+        const { success } = z.array(CatImageSchema).safeParse(data);
+
+        if (success) {
+          return data.map((cat) => ({
+            cat_id: cat.id,
+            image_url: cat.url,
+            favorite: false, //TODO: set it right
+          }));
+        }
+        return [];
       },
 
       getNextPageParam: (lastPage, pages) => {
