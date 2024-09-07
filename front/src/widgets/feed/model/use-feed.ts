@@ -17,7 +17,7 @@ export const useFeed = () => {
       queryKey: ["feed"],
       queryFn: async ({ pageParam = 0 }): Promise<Cat[]> => {
         const { data } = await $cats.get<CatImage[]>(
-          `/images/search?size=med&mime_types=jpg&format=json&order=DESC&page=${pageParam}&limit=15`,
+          `/images/search?size=med&mime_types=jpg&format=json&order=RANDOM&page=${pageParam}&limit=15`,
         );
 
         const { success } = z.array(CatImageSchema).safeParse(data);
@@ -31,7 +31,7 @@ export const useFeed = () => {
 
           if (user) {
             const { data: favorites } = await $cats.get<Favourite[]>(
-              `/favourites?sub_id=${user?.login}&size=med&mime_types=jpg&format=json&order=DESC&page=${pageParam}&limit=15`,
+              `/favourites?sub_id=${user?.login}&size=med&mime_types=jpg&format=json&order=DESC`,
             );
             const { success } = z.array(FavouriteSchema).safeParse(favorites);
             if (success) {
