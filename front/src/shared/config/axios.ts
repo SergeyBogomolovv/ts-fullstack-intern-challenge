@@ -1,16 +1,15 @@
 import axios from "axios";
 import { ACCESS_TOKEN_KEY, API_URL, CATS_API_KEY } from "../constants";
 
-function extractToken() {
-  const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-  return token;
-}
-
 export const $api = axios.create({
   baseURL: API_URL,
-  headers: {
-    "x-auth-token": extractToken(),
-  },
+});
+
+$api.interceptors.request.use((config) => {
+  if (localStorage.getItem(ACCESS_TOKEN_KEY)) {
+    config.headers["x-auth-token"] = localStorage.getItem(ACCESS_TOKEN_KEY);
+  }
+  return config;
 });
 
 $api.interceptors.response.use(
