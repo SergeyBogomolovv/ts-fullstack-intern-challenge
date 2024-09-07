@@ -13,19 +13,22 @@ interface Props {
 export default function LikeButton({ cat }: Props) {
   const { mutate: like } = useLike();
   const { mutate: disLike } = useDisLike();
-  //TODO: add dislike and liked heart state
   const isAuthenticated = useMemo(checkAuth, []);
 
   const clickHandler = () => {
     if (!isAuthenticated) {
       return;
     }
-    like(cat.id);
+    if (cat.favorite) {
+      disLike(cat.cat_id);
+    } else {
+      like(cat.cat_id);
+    }
   };
 
   return (
     <StyledButton disabled={!isAuthenticated} onClick={clickHandler}>
-      <Heart filled={true} />
+      <Heart filled={cat.favorite} />
     </StyledButton>
   );
 }

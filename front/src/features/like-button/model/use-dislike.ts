@@ -8,6 +8,7 @@ export const useDisLike = () => {
       return $api.delete(`/likes/${cat_id}`);
     },
     onSuccess() {
+      // TODO: invalidate query here
       queryClient.invalidateQueries({ queryKey: ["favorites", "feed"] });
     },
   });

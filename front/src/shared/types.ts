@@ -1,24 +1,26 @@
-export type Cat = {
+export type CatImage = {
+  breeds: any[];
+  categories: any[];
+  height: number;
   id: string;
   url: string;
   width: number;
-  height: number;
 };
 
-export type Like = {
-  id: string;
+export type Cat = {
   cat_id: string;
-  created_at: string;
+  image_url: string;
+  favorite?: boolean;
 };
 
 export type Favourite = {
+  created_at: string;
   id: number;
-  cat_id: string;
-  image_id: string;
-  sub_id: string;
   image: {
     id: string;
     url: string;
   };
-  created_at: string;
+  image_id: string;
+  sub_id: string;
+  user_id: string;
 };
