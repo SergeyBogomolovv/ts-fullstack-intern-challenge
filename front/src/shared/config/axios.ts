@@ -2,7 +2,7 @@ import axios from "axios";
 import { ACCESS_TOKEN_KEY, API_URL, CATS_API_KEY } from "../constants";
 
 export const $api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`,
 });
 
 $api.interceptors.request.use((config) => {

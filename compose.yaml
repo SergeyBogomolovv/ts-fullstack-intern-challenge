@@ -15,6 +15,7 @@ services:
       - "8080:80"
     networks:
       - cat-pinterest-net
+      
 
   cat-pinterest-api:
     container_name: cat-pinterest-api
@@ -46,16 +47,15 @@ services:
     image: postgres:14
     networks:
       - cat-pinterest-net
-    environment:
-      POSTGRES_PASSWORD: 1
-      POSTGRES_USER: postgres
-      POSTGRES_DB: support_lk_db
-      PG_DATA: /var/lib/postgresql/data
+    env_file:
+      - ./api/.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 2s
       timeout: 5s
       retries: 10
+    ports:
+      - "5432:5432"
 
 networks:
   cat-pinterest-net:
