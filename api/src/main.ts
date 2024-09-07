@@ -9,8 +9,7 @@ async function bootstrap() {
   app.use(
     cors({
       origin: 'http://localhost:5173',
-      credentials: true,
-      exposedHeaders: ['X-Auth-Token'],
+      exposedHeaders: ['X-Auth-Token', 'x-auth-token'],
     }),
   );
   await app.listen(3000);

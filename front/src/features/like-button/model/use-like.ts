@@ -8,8 +8,7 @@ export const useLike = () => {
       return $api.post("/likes", { cat_id });
     },
     onSuccess() {
-      // TODO: invalidate query here
-      queryClient.invalidateQueries({ queryKey: ["favorites", "feed"] });
+      queryClient.refetchQueries({ queryKey: ["favorites", "feed"] });
     },
   });
 };
