@@ -1,7 +1,7 @@
 import axios from "axios";
-import { ACCESS_TOKEN_KEY, API_URL } from "../constants";
+import { ACCESS_TOKEN_KEY, API_URL, CATS_API_KEY } from "../constants";
 
-const $api = axios.create({
+export const $api = axios.create({
   baseURL: API_URL,
   headers: {
     "x-auth-token": localStorage.getItem(ACCESS_TOKEN_KEY),
@@ -20,4 +20,9 @@ $api.interceptors.response.use(
   },
 );
 
-export default $api;
+export const $cats = axios.create({
+  baseURL: "https://api.thecatapi.com/v1",
+  headers: {
+    "x-api-key": CATS_API_KEY,
+  },
+});

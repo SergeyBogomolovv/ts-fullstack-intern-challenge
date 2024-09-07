@@ -1,22 +1,29 @@
-import CatCard from "@/entities/cat-card";
-import FavoriteButton from "@/features/like-button";
-import { Cat } from "@/shared/types";
-import CatsContainer from "@/shared/ui/cats-container";
+import styled from "styled-components";
+import { useFeed } from "../model/use-feed";
+import CatFeedContainer from "./feed-container";
 
-interface Props {
-  cats: Cat[];
-}
+export default function CatFeed() {
+  const { data, isFetchingNextPage, isLoading } = useFeed();
 
-export default function CatFeed({ cats }: Props) {
   return (
-    <CatsContainer>
-      {cats.map((cat) => (
-        <CatCard
-          key={cat.id}
-          cat={cat}
-          button={(cat) => <FavoriteButton cat={cat} />}
-        />
-      ))}
-    </CatsContainer>
+    <>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        <>
+          <CatFeedContainer cats={data?.pages.flat() || []} />
+          {isFetchingNextPage ? (
+            <LoadingLabel>... загружаем еще котиков ..</LoadingLabel>
+          ) : null}
+        </>
+      )}
+    </>
   );
 }
+
+const LoadingLabel = styled.div`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+`;

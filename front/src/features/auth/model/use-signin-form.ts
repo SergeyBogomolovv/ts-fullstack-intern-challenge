@@ -3,8 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SingInFields } from "../model/schemas";
 import { ACCESS_TOKEN_KEY } from "@/shared/constants";
 import { useRevalidator } from "react-router-dom";
-import $api from "@/shared/config/axios";
 import { useMutation } from "@tanstack/react-query";
+import { $api } from "@/shared/config/axios";
 
 export const useSignInForm = () => {
   const {

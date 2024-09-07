@@ -49,19 +49,26 @@ export class LikesService {
   }
 
   async deleteLike(userId: string, cat_id: string) {
-    const like = await this.likesRepository.findOne({
-      where: { user: { id: userId }, cat_id },
-    });
+    try {
+      const like = await this.likesRepository.findOne({
+        where: { user: { id: userId }, cat_id },
+      });
 
-    if (!like) {
-      throw new NotFoundException('Like not found');
+      await firstValueFrom(
+        this.httpService.delete<Favourite>(`/favourites/${like.favourite_id}/`),
+      );
+
+      if (!like) {
+        throw new NotFoundException('Like not found');
+      }
+
+      return this.likesRepository.remove(like);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Invalid cat id');
     }
-
-    await firstValueFrom(
-      this.httpService.delete<Favourite>(`/favourites/${like.favourite_id}/`),
-    );
-
-    return this.likesRepository.remove(like);
   }
 
   getList(userId: string) {

@@ -1,15 +1,48 @@
-import { CATS_API_KEY } from "@/shared/constants";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { $cats } from "@/shared/config/axios";
 import { Cat } from "@/shared/types";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useEffect } from "react";
 
 export const useFeed = () => {
-  return useQuery({
-    queryKey: ["feed"],
-    queryFn: () =>
-      axios.get<Cat[]>(
-        "https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&order=RANDOM&page=0&limit=10",
-        { headers: { "x-api-key": CATS_API_KEY } },
-      ),
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery({
+      queryKey: ["feed"],
+      queryFn: async ({ pageParam = 0 }) => {
+        const { data } = await $cats.get<Cat[]>(
+          `/images/search?size=low&mime_types=jpg&format=json&order=RANDOM&page=${pageParam}&limit=20`,
+        );
+        return data;
+      },
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length > 0) {
+          return pages.length;
+        } else {
+          return undefined;
+        }
+      },
+      initialPageParam: 0,
+      staleTime: 1000 * 60 * 10,
+    });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 100 &&
+        !isFetchingNextPage &&
+        hasNextPage
+      ) {
+        fetchNextPage();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  return {
+    data,
+    isFetchingNextPage,
+    isLoading,
+  };
 };
