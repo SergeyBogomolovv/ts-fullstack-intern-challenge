@@ -1,10 +1,10 @@
-import { Cat } from "@/shared/types";
 import Heart from "@/shared/ui/heart";
 import styled from "styled-components";
 import { useLike } from "../model/use-like";
 import checkAuth from "@/shared/utils/check-auth";
 import { useMemo } from "react";
 import { useDisLike } from "../model/use-dislike";
+import { Cat } from "@/shared/schemas";
 
 interface Props {
   cat: Cat;
