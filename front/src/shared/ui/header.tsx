@@ -6,7 +6,6 @@ export default function Header() {
     <StyledHeader>
       <Link to="/">Все котики</Link>
       <Link to="/favorites">Любимые котики</Link>
-      <button onClick={() => localStorage.clear()}>reset login</button>
     </StyledHeader>
   );
 }
