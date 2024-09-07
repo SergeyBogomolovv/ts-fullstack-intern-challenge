@@ -25,6 +25,8 @@ import { JwtAuthGuard } from './common/guards/auth.guard';
         JWT_SECRET: Joi.string().required(),
 
         CAT_API_KEY: Joi.string().required(),
+
+        CORS_ORIGIN: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({

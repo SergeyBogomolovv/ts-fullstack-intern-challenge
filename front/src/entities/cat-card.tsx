@@ -1,4 +1,4 @@
-import { Cat } from "@/shared/types";
+import { Cat } from "@/shared/schemas";
 import styled from "styled-components";
 
 interface Props {

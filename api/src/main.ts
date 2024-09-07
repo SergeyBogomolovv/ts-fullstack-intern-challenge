@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(
     cors({
-      origin: 'http://localhost:5173',
+      origin: process.env.CORS_ORIGIN,
       exposedHeaders: ['X-Auth-Token', 'x-auth-token'],
     }),
   );
