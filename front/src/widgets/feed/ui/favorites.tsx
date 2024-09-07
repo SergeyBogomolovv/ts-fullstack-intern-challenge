@@ -1,8 +1,8 @@
-import { useFeed } from "../model/use-feed";
+import { useFavorites } from "../model/use-favorites";
 import FeedContainer from "./feed-container";
 
-export default function CatFeed() {
-  const { cats, isFetchingNextPage, isLoading } = useFeed();
+export default function FavoriteCats() {
+  const { cats, isFetchingNextPage, isLoading } = useFavorites();
 
   return (
     <FeedContainer

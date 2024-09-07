@@ -9,7 +9,7 @@ interface Props {
 export default function CatCard({ button, cat }: Props) {
   return (
     <Card>
-      <StyledImage src={cat.url} alt={`cat ${cat.id}`} />
+      <StyledImage src={cat.image_url} alt={`cat ${cat.cat_id}`} />
       <StyledButton>{button(cat)}</StyledButton>
     </Card>
   );

@@ -26,7 +26,7 @@ export class UsersService {
       );
       if (isPasswordsMatch) {
         return {
-          token: this.generateToken(existingUser.id),
+          token: this.generateToken(existingUser.id, existingUser.login),
           user: existingUser,
         };
       } else {
@@ -40,7 +40,7 @@ export class UsersService {
       password: hashedPassword,
     });
 
-    return { token: this.generateToken(user.id), user };
+    return { token: this.generateToken(user.id, user.login), user };
   }
 
   update(id: string, dto: Partial<UserEntity>) {
@@ -67,7 +67,7 @@ export class UsersService {
     return compare(payload, hashed);
   }
 
-  private generateToken(id: string) {
-    return this.jwtService.sign({ id });
+  private generateToken(id: string, login: string) {
+    return this.jwtService.sign({ id, login });
   }
 }

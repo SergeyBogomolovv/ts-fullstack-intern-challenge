@@ -18,6 +18,9 @@ export class LikeEntity {
   @Column()
   cat_id: string;
 
+  @Column()
+  favourite_id: number;
+
   @ManyToOne(() => UserEntity, (user) => user.likes)
   user: UserEntity;
 }

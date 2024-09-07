@@ -23,6 +23,8 @@ import { JwtAuthGuard } from './common/guards/auth.guard';
         POSTGRES_HOST: Joi.string().required(),
 
         JWT_SECRET: Joi.string().required(),
+
+        CAT_API_KEY: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({

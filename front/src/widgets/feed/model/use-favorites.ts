@@ -1,23 +1,27 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { $cats } from "@/shared/config/axios";
-import { Cat, CatImage } from "@/shared/types";
+import { Cat, Favourite } from "@/shared/types";
+import getUser from "@/shared/utils/get-user";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-export const useFeed = () => {
+export const useFavorites = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["feed"],
+      queryKey: ["favorites"],
       queryFn: async ({ pageParam = 0 }): Promise<Cat[]> => {
-        const { data } = await $cats.get<CatImage[]>(
-          `/images/search?size=med&mime_types=jpg&format=json&order=RANDOM&page=${pageParam}&limit=15`,
+        const user = getUser();
+        const { data } = await $cats.get<Favourite[]>(
+          `/favourites?sub_id=${user?.login}&size=med&mime_types=jpg&format=json&order=DESC&page=${pageParam}&limit=15`,
         );
+
         return data.map((cat) => ({
-          cat_id: cat.id,
-          image_url: cat.url,
-          favorite: false, //TODO: set it right
+          cat_id: cat.image_id,
+          image_url: cat.image.url,
+          favorite: true,
         }));
       },
 
+      initialPageParam: 0,
       getNextPageParam: (lastPage, pages) => {
         if (lastPage.length > 0) {
           return pages.length;
@@ -25,8 +29,6 @@ export const useFeed = () => {
           return undefined;
         }
       },
-      initialPageParam: 0,
-      staleTime: 1000 * 60 * 10,
     });
 
   const handleScroll = () => {
@@ -44,9 +46,5 @@ export const useFeed = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  return {
-    cats: data?.pages.flat(),
-    isFetchingNextPage,
-    isLoading,
-  };
+  return { cats: data?.pages.flat(), isFetchingNextPage, isLoading };
 };
