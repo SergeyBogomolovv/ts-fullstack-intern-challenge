@@ -1,6 +1,6 @@
+import { Cat } from "@/entities/cat";
 import { $api } from "@/shared/config/axios";
 import queryClient from "@/shared/config/query";
-import { Cat } from "@/shared/schemas";
 import { useMutation } from "@tanstack/react-query";
 
 export const useLike = () => {

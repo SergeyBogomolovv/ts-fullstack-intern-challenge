@@ -1,31 +1,36 @@
-import { $cats } from "@/shared/config/axios";
-import queryClient from "@/shared/config/query";
 import {
   Cat,
   CatImage,
   CatImageSchema,
   Favourite,
   FavouriteSchema,
-} from "@/shared/schemas";
-import getUser from "@/shared/utils/get-user";
+} from "@/entities/cat";
+import { getUser } from "@/entities/user";
+import { $cats } from "@/shared/config/axios";
+import queryClient from "@/shared/config/query";
+
 import { z } from "zod";
 
-export const fetchFavorites = async ({ pageParam = 0 }): Promise<Cat[]> => {
+export const fetchFavorites = async (): Promise<Cat[]> => {
   const user = getUser();
-  const { data } = await $cats.get<Favourite[]>(
-    `/favourites?sub_id=${user?.login}&size=med&mime_types=jpg&format=json&order=DESC&page=${pageParam}&limit=15`,
-  );
+  try {
+    const { data } = await $cats.get<Favourite[]>(
+      `/favourites?sub_id=${user?.login}&size=med&mime_types=jpg&format=json&order=DESC`,
+    );
 
-  const { success } = z.array(FavouriteSchema).safeParse(data);
+    const { success } = z.array(FavouriteSchema).safeParse(data);
 
-  if (success) {
-    return data.map((cat) => ({
-      cat_id: cat.image_id,
-      image_url: cat.image.url,
-      favorite: true,
-    }));
+    if (success) {
+      return data.map((cat) => ({
+        cat_id: cat.image_id,
+        image_url: cat.image.url,
+        favorite: true,
+      }));
+    }
+    return [];
+  } catch (error) {
+    return [];
   }
-  return [];
 };
 
 export const fetchFeed = async ({ pageParam = 0 }): Promise<Cat[]> => {
@@ -44,14 +49,17 @@ export const fetchFeed = async ({ pageParam = 0 }): Promise<Cat[]> => {
     }));
 
     if (user) {
-      const favoritesData = queryClient.getQueryData<{
-        pages: Cat[][];
-        pageParams: number[];
-      }>(["favorites"]);
+      let favorites = queryClient.getQueryData<Cat[]>(["favorites"]);
 
-      if (favoritesData?.pages?.length) {
-        const favorites = favoritesData.pages.flat();
+      if (!favorites) {
+        await queryClient.fetchQuery({
+          queryKey: ["favorites"],
+          queryFn: fetchFavorites,
+        });
+        favorites = queryClient.getQueryData<Cat[]>(["favorites"]);
+      }
 
+      if (favorites?.length) {
         for (const cat of favorites) {
           const index = cats.findIndex((c) => c.cat_id === cat.cat_id);
           if (index !== -1) {

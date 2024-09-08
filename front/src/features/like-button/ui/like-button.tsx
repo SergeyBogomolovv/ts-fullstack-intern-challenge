@@ -1,10 +1,10 @@
 import Heart from "@/shared/ui/heart";
 import styled from "styled-components";
 import { useLike } from "../model/use-like";
-import checkAuth from "@/shared/utils/check-auth";
 import { useMemo } from "react";
 import { useDisLike } from "../model/use-dislike";
-import { Cat } from "@/shared/schemas";
+import { Cat } from "@/entities/cat";
+import { checkAuth } from "@/entities/user";
 
 interface Props {
   cat: Cat;
@@ -27,15 +27,16 @@ export default function LikeButton({ cat }: Props) {
   };
 
   return (
-    <StyledButton disabled={!isAuthenticated} onClick={clickHandler}>
+    <StyledButton $disabled={!isAuthenticated} onClick={clickHandler}>
       <Heart filled={cat.favorite} />
     </StyledButton>
   );
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $disabled?: boolean }>`
   background: none;
   border: none;
-  cursor: pointer;
   color: #ff3a00;
+  opacity: ${(props) => (props.$disabled ? 0.5 : 1)};
+  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 `;
