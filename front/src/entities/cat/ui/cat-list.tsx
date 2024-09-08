@@ -1,10 +1,10 @@
-import CatCard from "@/entities/cat-card";
 import FavoriteButton from "@/features/like-button";
-import { Cat } from "@/shared/schemas";
-import CatsContainer from "@/shared/ui/cats-container";
-import CatsSkeleton from "@/shared/ui/cats-skeleton";
 import Container from "@/shared/ui/container";
 import styled from "styled-components";
+import { Cat } from "../model/cat-model";
+import CatCard from "./cat-card";
+import CatsSkeleton from "./cat-skeleton";
+import { CatsContainer } from "./container";
 
 interface Props {
   initialLoading?: boolean;
@@ -12,7 +12,7 @@ interface Props {
   data: Cat[];
 }
 
-export default function FeedContainer({
+export default function CatsList({
   data,
   initialLoading,
   isFetchingNextPage,

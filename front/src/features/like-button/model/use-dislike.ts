@@ -1,6 +1,6 @@
+import { Cat } from "@/entities/cat";
 import { $api } from "@/shared/config/axios";
 import queryClient from "@/shared/config/query";
-import { Cat } from "@/shared/schemas";
 import { useMutation } from "@tanstack/react-query";
 
 export const useDisLike = () => {
@@ -29,23 +29,13 @@ export const useDisLike = () => {
         },
       );
 
-      queryClient.setQueryData(
-        ["favorites"],
-        (oldData: { pages: Cat[][]; pageParams: number[] } | undefined) => {
-          if (!oldData) {
-            return oldData;
-          }
+      queryClient.setQueryData(["favorites"], (oldData: Cat[] | undefined) => {
+        if (!oldData) {
+          return oldData;
+        }
 
-          const newPages = oldData.pages.map((page) =>
-            page.filter((cat) => cat.cat_id !== cat_id),
-          );
-
-          return {
-            ...oldData,
-            pages: newPages,
-          };
-        },
-      );
+        return oldData.filter((cat) => cat.cat_id !== cat_id);
+      });
     },
   });
 };

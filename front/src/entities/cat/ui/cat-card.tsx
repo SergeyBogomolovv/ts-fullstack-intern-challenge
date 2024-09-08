@@ -1,5 +1,5 @@
-import { Cat } from "@/shared/schemas";
 import styled from "styled-components";
+import { Cat } from "../model/cat-model";
 
 interface Props {
   cat: Cat;

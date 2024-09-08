@@ -12,8 +12,8 @@ import NotFoundPage from "@/pages/404";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<RootLayout />}>
-      <Route path="/" element={<HomePage />} />
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<HomePage />} />
 
       <Route
         path="favorites"

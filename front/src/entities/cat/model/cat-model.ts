@@ -32,10 +32,3 @@ export const CatSchema = z.object({
 });
 
 export type Cat = z.infer<typeof CatSchema>;
-
-export const UserSchema = z.object({
-  login: z.string(),
-  id: z.string(),
-});
-
-export type User = z.infer<typeof UserSchema>;
