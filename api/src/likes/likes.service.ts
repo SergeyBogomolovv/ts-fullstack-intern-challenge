@@ -71,7 +71,8 @@ export class LikesService {
     }
   }
 
-  getList(userId: string) {
-    return this.usersService.getUsersLikes(userId);
+  async getList(userId: string) {
+    const likes = await this.usersService.getUsersLikes(userId);
+    return likes.map((like) => like.cat_id);
   }
 }

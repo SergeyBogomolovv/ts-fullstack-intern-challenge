@@ -30,7 +30,7 @@ export const useLike = () => {
       );
     },
     onSuccess() {
-      queryClient.refetchQueries({ queryKey: ["favorites"] });
+      queryClient.refetchQueries({ queryKey: ["favorites", "likes"] });
     },
   });
 };

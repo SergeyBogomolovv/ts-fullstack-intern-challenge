@@ -56,6 +56,7 @@ export class UsersService {
       where: { id },
       relations: ['likes'],
     });
+    if (!user) throw new MethodNotAllowedException('User not found');
     return user.likes;
   }
 

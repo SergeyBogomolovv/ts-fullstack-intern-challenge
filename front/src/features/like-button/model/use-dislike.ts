@@ -36,6 +36,8 @@ export const useDisLike = () => {
 
         return oldData.filter((cat) => cat.cat_id !== cat_id);
       });
+
+      queryClient.refetchQueries({ queryKey: ["likes"] });
     },
   });
 };
