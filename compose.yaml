@@ -37,10 +37,12 @@ services:
     image: cat-pinterest-front
     build:
       context: ./front/
+      args:
+        NODE_ENV: prod
+        VITE_CATS_API_KEY: live_ie8Toulv441tyBHwi2gSyIeVA04anu9FKRE4JI6otJcPH7ZLMlU156Prer9xtbeV
+        VITE_API_URL: http://localhost:3000
     networks:
       - cat-pinterest-net
-    env_file:
-      - ./front/.env
 
   cat-pinterest-api-pg:
     container_name: cat-pinterest-api-pg
